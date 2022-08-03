@@ -29,3 +29,42 @@ row_number() over (partition by user_name order by user_id) as rn
 from users u
 order by user_id) x
 where x.rn <> 1;
+
+
+---Write a SQL query to fetch the second last record from employee table.
+drop table employee;
+create table employee
+( emp_ID int primary key
+, emp_NAME varchar(50) not null
+, DEPT_NAME varchar(50)
+, SALARY int);
+
+insert into employee values(101, 'AAA', 'Admin', 4000);
+insert into employee values(102, 'BBB', 'HR', 3000);
+insert into employee values(103, 'CCC', 'IT', 4000);
+insert into employee values(104, 'DDD', 'Finance', 6500);
+insert into employee values(105, 'EEE', 'HR', 3000);
+insert into employee values(106, 'FFF',  'Finance', 5000);
+insert into employee values(107, 'GGG', 'HR', 7000);
+insert into employee values(108, 'HHH', 'Admin', 4000);
+insert into employee values(109, 'III', 'IT', 6500);
+insert into employee values(110, 'JJJ', 'IT', 7000);
+insert into employee values(111, 'KKK', 'IT', 8000);
+insert into employee values(112, 'LLL', 'IT', 10000);
+insert into employee values(113, 'MMM', 'Admin', 2000);
+insert into employee values(114, 'NNN', 'HR', 3000);
+insert into employee values(115, 'OOO', 'IT', 4500);
+insert into employee values(116, 'PPP', 'Finance', 6500);
+insert into employee values(117, 'QQQ', 'HR', 3500);
+insert into employee values(118, 'RRR', 'Finance', 5500);
+insert into employee values(119, 'SSS', 'HR', 8000);
+insert into employee values(120, 'TTT', 'Admin', 5000);
+insert into employee values(121, 'UUU', 'IT', 6000);
+insert into employee values(122, 'VVV', 'IT', 8000);
+insert into employee values(123, 'WWW', 'IT', 8000);
+insert into employee values(124, 'XXX', 'IT', 11000);
+
+Select * from (
+       Select *, row_number() over (order by emp_ID desc) as rn
+       from employee e) x
+       where x.rn = 2;
