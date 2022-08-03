@@ -68,3 +68,47 @@ Select * from (
        Select *, row_number() over (order by emp_ID desc) as rn
        from employee e) x
        where x.rn = 2;
+       
+  Write a SQL query to display only the details of employees who either earn the highest salary
+--or the lowest salary in each department from the employee table.
+
+drop table employee;
+create table employeedet
+( emp_ID int primary key
+, emp_NAME varchar(50) not null
+, DEPT_NAME varchar(50)
+, SALARY int);
+
+insert into employeedet values(101, 'AAA', 'Admin', 4000);
+insert into employeedet values(102, 'qqq', 'HR', 3000);
+insert into employeedet values(103, 'ZZZ', 'IT', 4000);
+insert into employeedet values(104, 'EEE', 'Finance', 6500);
+insert into employeedet values(105, 'dDD', 'HR', 3000);
+insert into employeedet values(106, 'dddd',  'Finance', 5000);
+insert into employeedet values(107, 'erff', 'HR', 7000);
+insert into employeedet values(108, 'gfdd', 'Admin', 4000);
+insert into employeedet values(109, 'rggre', 'IT', 6500);
+insert into employeedet values(110, 'Veeee', 'IT', 7000);
+insert into employeedet values(111, 'geeee', 'IT', 8000);
+insert into employeedet values(112, 'jtht', 'IT', 10000);
+insert into employeedet values(113, 'ththr', 'Admin', 2000);
+insert into employeedet values(114, 'jtttrtr', 'HR', 3000);
+insert into employeedet values(115, 'htgrr', 'IT', 4500);
+insert into employeedet values(116, 'htgrr', 'Finance', 6500);
+insert into employeedet values(117, 'mtjuk', 'HR', 3500);
+insert into employeedet values(118, 'kynnt', 'Finance', 5500);
+insert into employeedet values(119, 'kttgkk', 'HR', 8000);
+insert into employeedet values(120, 'lmnhhy', 'Admin', 5000);
+insert into employeedet values(121, 'pjmjh', 'IT', 6000);
+insert into employeedet values(122, 'Intggg', 'IT', 8000);
+insert into employeedet values(123, 'Vhthhj', 'IT', 8000);
+insert into employeedet values(124, 'Dkghgh', 'IT', 11000);
+      
+  
+    
+    Select *, row_number() over (partition by DEPT_NAME order by emp_ID asc)
+    From
+    (Select e.*,
+    max(salary) over(partition by DEPT_NAME) as max_salary, min(salary) over(partition by DEPT_NAME) as min_salary
+    from employeedet e) 
+    Where salary = max_salary or salary = min_salary
