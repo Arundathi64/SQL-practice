@@ -32,7 +32,7 @@ where x.rn <> 1;
 
 
 ---Write a SQL query to fetch the second last record from employee table.
-drop table employee;
+
 create table employee
 ( emp_ID int primary key
 , emp_NAME varchar(50) not null
@@ -112,3 +112,15 @@ insert into employeedet values(124, 'Dkghgh', 'IT', 11000);
     max(salary) over(partition by DEPT_NAME) as max_salary, min(salary) over(partition by DEPT_NAME) as min_salary
     from employeedet e) 
     Where salary = max_salary or salary = min_salary
+    
+    or
+    
+     select x.*
+from employeedet e
+join (select *,
+max(salary) over (partition by dept_name) as max_salary,
+min(salary) over (partition by dept_name) as min_salary
+from employee) x
+on e.emp_id = x.emp_id
+and (e.salary = x.max_salary or e.salary = x.min_salary)
+order by x.dept_name, x.salary;
