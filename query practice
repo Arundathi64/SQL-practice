@@ -1,4 +1,4 @@
- -- SQL Query to fetch duplicate records in a table in Snowflake.
+SQL Query to fetch duplicate records in a table.
 
 Create database windowfunction
 
@@ -9,18 +9,18 @@ user_name varchar(30) not null,
 email varchar(50));
 
 insert into users values
-(1, 'Swathi', 'swathi@gmail.com'),
-(2, 'Rekha', 'rekha@gmail.com'),
-(3, 'Kasturi', 'kasturi@gmail.com'),
-(4, 'Rohan', 'rohan@gmail.com'),
-(5, 'Rohan', 'rohan@gmail.com');
+(1, 'Sumit', 'sumit@gmail.com'),
+(2, 'Reshma', 'reshma@gmail.com'),
+(3, 'Farhana', 'farhana@gmail.com'),
+(4, 'Robin', 'robin@gmail.com'),
+(5, 'Robin', 'robin@gmail.com');
 
 Select * from users 
 
-Select user_id, count(user_id) 
+Select user_name, count(user_name)
 From users
-group by user_id
-having count(user_id) >1;
+group by user_name
+having count(user_name) >1;
 
 select user_id, user_name, email
 from (
