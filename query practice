@@ -30,7 +30,7 @@ from users u
 order by user_id) x
 where x.rn <> 1;
 
-
+-----------------------------------------------------------------------------------------------------------------------------------------------------
 ---Write a SQL query to fetch the second last record from employee table.
 
 create table employee
@@ -68,7 +68,7 @@ Select * from (
        Select *, row_number() over (order by emp_ID desc) as rn
        from employee e) x
        where x.rn = 2;
-       
+----------------------------------------------------------------------------------------------------------------------------------------------------------       
   Write a SQL query to display only the details of employees who either earn the highest salary
 --or the lowest salary in each department from the employee table.
 
@@ -124,3 +124,41 @@ from employee) x
 on e.emp_id = x.emp_id
 and (e.salary = x.max_salary or e.salary = x.min_salary)
 order by x.dept_name, x.salary;
+-------------------------------------------------------------------------------------------------------------------------------------------
+
+From the doctors table, fetch the details of doctors who work in the same hospital but in different speciality.
+
+
+Create database complex_query
+create table doctors
+(
+id int primary key,
+name varchar(50) not null,
+speciality varchar(100),
+hospital varchar(50),
+city varchar(50),
+consultation_fee int
+);
+
+insert into doctors values
+(1, 'Dr. AAA', 'Ayurveda', 'A Hospital', 'Bangalore', 2500),
+(2, 'Dr. BBB', 'Homeopathy', 'L Hospital', 'Bangalore', 2000),
+(3, 'Dr. cCC', 'Homeopathy', 'K Hospital', 'Manipal', 1000),
+(4, 'Dr. DDD', 'Dermatology', 'K Hospital', 'Manipal', 1500),
+(5, 'Dr. eEE', 'Physician', 'G Hospital', 'Bangalore', 1700),
+(6, 'Dr. FFF', 'Physician', 'Gs Hospital', 'Bangalore', 1500);
+
+Select * from doctors
+Select d1.name, d1.speciality, d1.hospital from doctors d1
+JOIN
+doctors d2 on d1.hospital = d2.hospital and d1.speciality <> d2.speciality
+and d1.id <> d2.id;
+
+--find the doctors who work in same hospital irrespective of their speciality.
+Select d1.name, d1.speciality, d1.hospital from doctors d1
+JOIN doctors d2 
+on d1.hospital = d2.hospital 
+and d1.id <> d2.id;
+
+----------------------------------------------------------------------------------------------------------------------------------
+
